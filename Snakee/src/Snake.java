@@ -1,7 +1,7 @@
 
-public class Snake {
+public class Snake implements Runnable{
 	private int length;		// how big the snake is
-	private char [] snake; // This is the snake itself, char array?? can we use vectors?
+	private char [] body; // This is the snake itself, char array?? can we use vectors?
 	private int xCoord; // x-Coordinate of the head of the snake
 	private int yCoord; // y-Coordinate of the head of the snake, we don't need the body coords
 	
@@ -14,4 +14,12 @@ public class Snake {
 	public int getLength () { return length; }
 	public int getXCoord () { return xCoord; }
 	public int getYCoord () { return yCoord; }
+	
+	public void run(){
+		try {
+			
+		} catch (Exception e){
+			
+		}
+	}
 }
