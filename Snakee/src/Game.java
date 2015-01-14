@@ -15,27 +15,18 @@ public class Game extends JFrame implements Runnable{
 	final int START_POS_X = 250;
 	final int START_POS_Y = 250;
 	
-	//int xApplePos = Math.random()*500;
-	//int yApplePos = Math.random()*500;
-	
 	Snake snake = new Snake(0,START_POS_X,START_POS_Y);
+	Apple apple = new Apple();
 
 	int x, y;
 	char curDirection; 
+	boolean appleSpawned = false;
 	
 	// Variables for double buffering
 	private Image dbImage;
 	private Graphics dbg;
 	
 	public void run(){
-		snake.addBodyPart();
-		
-		snake.addBodyPart();
-		snake.addBodyPart();
-		snake.addBodyPart();
-		snake.addBodyPart();
-		snake.addBodyPart();
-		
 		try {
 			while (true){
 				move ();
@@ -135,13 +126,14 @@ public class Game extends JFrame implements Runnable{
 	
 	public void paintComponent(Graphics g){
 		snake.drawSnake(g);
+		apple.spawnApple(g);
+		if (apple.isAppleEaten(snake.getXCoord(), snake.getYCoord())){
+			apple.spawnApple(g);
+			snake.addBodyPart();
+		}
 		repaint();
 	}
 	
-	// spawn a new apple on the map
-	public void spawnApple(){
-		
-	}
 	
 	public static void main(String[] args) {
 		Game game = new Game();
