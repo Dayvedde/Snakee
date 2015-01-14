@@ -23,6 +23,17 @@ public class Snake {
 		}
 		yCoord = y; 
 	}
+	
+	public void changeCoords(int x, int y){
+		if (x == xCoord && y == yCoord){
+			return;
+		}
+		if (nextBodyPart != null){
+			nextBodyPart.changeCoords (xCoord, yCoord);
+		}
+		xCoord = x;
+		yCoord = y;
+	}
 	public void setBodyPart (int bp){ bodyPart = bp; }
 	
 	// Getters

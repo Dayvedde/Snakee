@@ -10,15 +10,16 @@ public class Game extends JFrame implements Runnable{
 	final char RIGHT = 'd';
 	final char UP = 'w';
 	final char DOWN = 's';
-	final int delay = 100;
+	final int delay = 50;
 	
 	final int START_POS_X = 250;
 	final int START_POS_Y = 250;
 	
+	//int xApplePos = Math.random()*500;
+	//int yApplePos = Math.random()*500;
+	
 	Snake snake = new Snake(0,START_POS_X,START_POS_Y);
 
-	
-	
 	int x, y;
 	char curDirection; 
 	
@@ -28,11 +29,17 @@ public class Game extends JFrame implements Runnable{
 	
 	public void run(){
 		snake.addBodyPart();
+		
 		snake.addBodyPart();
+		snake.addBodyPart();
+		snake.addBodyPart();
+		snake.addBodyPart();
+		snake.addBodyPart();
+		
 		try {
 			while (true){
 				move ();
-				Thread.sleep(100);
+				Thread.sleep(delay);
 			}
 		} catch (Exception e){
 			
@@ -46,34 +53,31 @@ public class Game extends JFrame implements Runnable{
 		
 		if (curDirection == LEFT){
 			curXPos -= 15;
-			snake.setXCoord(curXPos);
 		}
 		else if (curDirection == RIGHT){
 			curXPos += 15;
-			snake.setXCoord(curXPos);
 		}
 		else if (curDirection == UP){
 			curYPos -= 15;
-			snake.setYCoord(curYPos);
 		}
 		else if (curDirection == DOWN){
 			curYPos += 15;
-			snake.setYCoord(curYPos);
 		}
 		
 		// Check for wall Collision, don't use 'else' because of double cases
 		if (curXPos <= 2){
-			snake.setXCoord(2);
+			curXPos = 2;
 		}
 		if (curXPos >= 483){
-			snake.setXCoord(483);
+			curXPos = 483;
 		}
 		if (curYPos <= 25){
-			snake.setYCoord(25);
+			curYPos = 25;
 		}
 		if (curYPos >= 482){
-			snake.setYCoord(482);
+			curYPos = 482;
 		}
+		snake.changeCoords(curXPos, curYPos);
 	}
 	
 	/*
@@ -136,7 +140,7 @@ public class Game extends JFrame implements Runnable{
 	
 	// spawn a new apple on the map
 	public void spawnApple(){
-	
+		
 	}
 	
 	public static void main(String[] args) {
