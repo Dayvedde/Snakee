@@ -10,6 +10,14 @@ public class Game extends JFrame implements Runnable{
 	final char RIGHT = 'd';
 	final char UP = 'w';
 	final char DOWN = 's';
+	final int delay = 100;
+	
+	final int START_POS_X = 250;
+	final int START_POS_Y = 250;
+	
+	Snake snake = new Snake(0,START_POS_X,START_POS_Y);
+
+	
 	
 	int x, y;
 	char curDirection; 
@@ -19,44 +27,52 @@ public class Game extends JFrame implements Runnable{
 	private Graphics dbg;
 	
 	public void run(){
+		snake.addBodyPart();
+		snake.addBodyPart();
 		try {
 			while (true){
 				move ();
-				Thread.sleep(30);
+				Thread.sleep(100);
 			}
 		} catch (Exception e){
 			
 		}
-	
 	}
 	
 	// Handle collision in here?
 	public void move(){
+		int curXPos = snake.getXCoord();
+		int curYPos = snake.getYCoord();
+		
 		if (curDirection == LEFT){
-			x -= 10;
+			curXPos -= 15;
+			snake.setXCoord(curXPos);
 		}
 		else if (curDirection == RIGHT){
-			x += 10;
+			curXPos += 15;
+			snake.setXCoord(curXPos);
 		}
 		else if (curDirection == UP){
-			y -= 10;
+			curYPos -= 15;
+			snake.setYCoord(curYPos);
 		}
 		else if (curDirection == DOWN){
-			y += 10;
+			curYPos += 15;
+			snake.setYCoord(curYPos);
 		}
 		
 		// Check for wall Collision, don't use 'else' because of double cases
-		if (x <= 0){
-			x = 0;
+		if (curXPos <= 2){
+			snake.setXCoord(2);
 		}
-		if (x >= 485){
-			x = 485;
+		if (curXPos >= 483){
+			snake.setXCoord(483);
 		}
-		if (y <= 25){
-			y = 25;
+		if (curYPos <= 25){
+			snake.setYCoord(25);
 		}
-		if (y >= 485){
-			y = 485;
+		if (curYPos >= 482){
+			snake.setYCoord(482);
 		}
 	}
 	
@@ -98,8 +114,6 @@ public class Game extends JFrame implements Runnable{
 	
 	public Game (){
 		addKeyListener(new AL());
-		x = 250;
-		y = 250;
 		setTitle("Snake");	// Name of title
 		setSize(500, 500);	//Size of screen
 		setResizable(false); //Can user resize?
@@ -116,8 +130,13 @@ public class Game extends JFrame implements Runnable{
 	
 	
 	public void paintComponent(Graphics g){
-		g.fillOval(x,y,15,15);
+		snake.drawSnake(g);
 		repaint();
+	}
+	
+	// spawn a new apple on the map
+	public void spawnApple(){
+	
 	}
 	
 	public static void main(String[] args) {
